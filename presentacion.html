@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Chosen Palette: Aurora Premium -->
+    <!-- Application Structure Plan: He diseñado la aplicación como una experiencia narrativa de una sola página ("scrollytelling"). La estructura sigue un flujo lógico: problema, solución, plan, finanzas y resultado. Este enfoque es ideal para presentar una estrategia, ya que guía al usuario paso a paso. Las interacciones clave incluyen tarjetas flotantes para el análisis FODA, un sistema de pestañas para detallar el plan y un gráfico dinámico para visualizar el impacto financiero. Esta estructura fue elegida porque transforma un informe estático en una historia atractiva y fácil de seguir, mejorando la comprensión y la retención para la audiencia. -->
+    <!-- Visualization & Content Choices: 1. Problema (FODA): Informe -> Meta: Organizar -> Viz: 4 tarjetas interactivas HTML/CSS -> Interacción: Hover para resaltar -> Justificación: Más atractivo que una tabla estática. 2. El Plan: Informe -> Meta: Organizar -> Viz: Pestañas interactivas HTML/JS -> Interacción: Clic para cambiar de vista -> Justificación: Evita la sobrecarga de información, presenta las ideas de forma ordenada. 3. Los Números: Informe -> Meta: Comparar -> Viz: Gráfico combinado de barras y líneas -> Interacción: Tooltips de Chart.js al pasar el ratón -> Justificación: Muestra la relación entre margen (barras) y punto de equilibrio (línea) de forma muy eficaz. -> Librería: Chart.js. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>Estrategia Premium: Café Aurora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FDFCF8;
+            color: #3D3D3D;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .aurora-accent-gold { color: #b58900; }
+        .aurora-accent-purple { color: #6a0dad; }
+        .aurora-bg-gold { background-color: #b58900; }
+        .aurora-bg-purple { background-color: #6a0dad; }
+        .aurora-border-gold { border-color: #b58900; }
+        .aurora-border-purple { border-color: #6a0dad; }
+
+        .tab-btn.active {
+            border-bottom-width: 4px;
+            color: #6a0dad;
+            border-color: #6a0dad;
+        }
+        .foda-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .foda-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="inicio" class="h-screen w-full flex flex-col justify-center items-center text-center p-4 bg-white relative">
+        <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1511920183353-30b533f0a4f5?q=80&w=2487&auto=format&fit=crop');"></div>
+        <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold aurora-accent-purple">Café Aurora</h1>
+            <h2 class="mt-4 text-2xl md:text-3xl font-semibold">Estrategia de Crecimiento Premium</h2>
+            <p class="mt-2 text-lg text-gray-600">Transformando un desafío en nuestra mayor fortaleza.</p>
+            <a href="#diagnostico" class="mt-8 inline-block aurora-bg-gold text-white font-bold py-3 px-8 rounded-full text-lg hover:opacity-90 transition-opacity">
+                Descubrir la Estrategia
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section id="diagnostico" class="py-20 px-4 md:px-8 bg-white">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold">1. El Problema: ¿Qué está pasando? 😟</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Todo gran plan comienza con un diagnóstico honesto. Nuestro café es excelente y la gente lo sabe, pero las ventas han disminuido. Aquí analizamos nuestra situación actual para encontrar el camino a seguir.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="foda-card bg-gray-50 p-6 rounded-2xl shadow-lg border-t-4 aurora-border-purple">
+                        <h3 class="text-2xl font-bold aurora-accent-purple">Fortalezas</h3>
+                        <p class="mt-4 text-left space-y-2">
+                            <span>✅ Café de alta calidad reconocida.</span><br>
+                            <span>✅ Buena reputación inicial.</span>
+                        </p>
+                    </div>
+                    <div class="foda-card bg-gray-50 p-6 rounded-2xl shadow-lg border-t-4 aurora-border-purple">
+                        <h3 class="text-2xl font-bold aurora-accent-purple">Oportunidades</h3>
+                        <p class="mt-4 text-left space-y-2">
+                            <span>🎓 Zona universitaria con un público que valora la calidad.</span><br>
+                            <span>📈 Potencial para crear un nicho premium.</span>
+                        </p>
+                    </div>
+                    <div class="foda-card bg-gray-50 p-6 rounded-2xl shadow-lg border-t-4 aurora-border-gold">
+                        <h3 class="text-2xl font-bold aurora-accent-gold">Debilidades</h3>
+                        <p class="mt-4 text-left space-y-2">
+                            <span>📉 Ventas en descenso.</span><br>
+                            <span>⚔️ Estrategia de precios reactiva.</span>
+                        </p>
+                    </div>
+                    <div class="foda-card bg-gray-50 p-6 rounded-2xl shadow-lg border-t-4 aurora-border-gold">
+                        <h3 class="text-2xl font-bold aurora-accent-gold">Amenazas</h3>
+                        <p class="mt-4 text-left space-y-2">
+                            <span>💸 Competencia con precios muy agresivos.</span><br>
+                            <span>📣 Promociones constantes de rivales.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="solucion" class="py-20 px-4 md:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold">2. La Gran Idea: Nuestra Solución 💡</h2>
+                <p class="mt-4 text-lg text-gray-600">En lugar de unirnos a la guerra de precios, elegimos un camino diferente. No se trata de vender café barato, sino de ofrecer una experiencia inigualable que justifique un valor superior.</p>
+                <div class="mt-8 bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                    <p class="text-2xl font-semibold">Dejaremos de vender solo café para vender una...</p>
+                    <p class="text-4xl md:text-5xl font-bold aurora-accent-purple mt-2">"Experiencia Premium"</p>
+                    <p class="mt-6 text-xl font-bold text-gray-700">Nuestro lema: No ser el más barato, sino <span class="aurora-accent-gold">el mejor</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="py-20 px-4 md:px-8 bg-white">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold">3. El Plan: ¿Cómo lo haremos? 🚀</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Un nuevo precio de <span class="font-bold">$4.00</span> no es solo un aumento, es el reflejo de un valor añadido tangible. Este plan se sostiene sobre tres pilares fundamentales que transformarán por completo la visita a Café Aurora.</p>
+                <div class="mt-10 border-b border-gray-200">
+                    <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
+                        <button id="tab-cafe" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700 active">☕ Café Increíble</button>
+                        <button id="tab-experiencia" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700">💻 Experiencia Perfecta</button>
+                        <button id="tab-lealtad" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 hover:text-gray-700">🌟 Recompensas</button>
+                    </nav>
+                </div>
+
+                <div id="content-cafe" class="tab-content mt-8 p-8 bg-purple-50 rounded-2xl">
+                    <h3 class="text-2xl font-bold aurora-accent-purple">Cafés de Origen Único</h3>
+                    <p class="mt-2 text-gray-700">Introducimos granos especiales de Chiapas y Veracruz. Una calidad superior que la competencia no puede igualar, con una historia detrás de cada taza.</p>
+                </div>
+                <div id="content-experiencia" class="tab-content mt-8 p-8 bg-purple-50 rounded-2xl hidden">
+                    <h3 class="text-2xl font-bold aurora-accent-purple">Ambiente de Estudio Ideal</h3>
+                    <p class="mt-2 text-gray-700">WiFi de alta velocidad, estaciones de carga USB y enchufes en cada mesa, y un ambiente curado para la concentración. El lugar perfecto para trabajar y estudiar.</p>
+                </div>
+                <div id="content-lealtad" class="tab-content mt-8 p-8 bg-purple-50 rounded-2xl hidden">
+                    <h3 class="text-2xl font-bold aurora-accent-purple">Programa "Aurora Rewards"</h3>
+                    <p class="mt-2 text-gray-700">Tu 5ta taza de café es GRATIS. Además, obtendrás descuentos exclusivos en librerías locales solo por ser nuestro cliente. Premiamos tu lealtad.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="numeros" class="py-20 px-4 md:px-8">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold">4. Los Números: ¿Esto es rentable? 💰</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Una gran idea debe ser respaldada por números sólidos. Este gráfico interactivo muestra cómo la nueva estrategia no solo aumenta el margen por cada taza, sino que también reduce nuestro riesgo al disminuir el punto de equilibrio.</p>
+                <div class="mt-12 bg-white p-4 sm:p-8 rounded-2xl shadow-xl border border-gray-100">
+                    <div class="chart-container relative w-full h-80 md:h-96 max-w-3xl mx-auto">
+                        <canvas id="financialChart"></canvas>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <p class="text-lg font-semibold">Cada venta vale más y tenemos un "colchón" financiero más grande.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultado" class="py-20 px-4 md:px-8 bg-white">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold">5. El Resultado Final: ¿A dónde vamos? 🏆</h2>
+                <p class="mt-4 text-lg text-gray-600">Al final de este camino, Café Aurora se consolida como el destino preferido de estudiantes y amantes del buen café. Dejamos de ser una opción más para convertirnos en **la mejor experiencia**, construyendo una marca sólida, rentable y querida.</p>
+                <div class="mt-8 bg-gradient-to-r from-purple-100 to-yellow-50 p-8 rounded-2xl shadow-lg">
+                    <p class="text-2xl md:text-3xl font-bold aurora-accent-purple">Conclusión Clave</p>
+                    <p class="mt-2 text-xl font-semibold text-gray-700">Calidad sobre precio, maximizando la rentabilidad a través de la diferenciación.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 px-4 text-center text-gray-500 bg-gray-100">
+        <p><strong>Presentado por:</strong> Ana García, Carlos Rodríguez y Sofía Martínez</p>
+        <p>19 de julio de 2025</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.id.replace('tab-', 'content-');
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    contents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const ctx = document.getElementById('financialChart').getContext('2d');
+            const financialChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Antes ($3.50)', 'Ahora ($4.00)'],
+                    datasets: [
+                        {
+                            type: 'bar',
+                            label: 'Ganancia por taza ($)',
+                            data: [2.30, 2.55],
+                            backgroundColor: ['rgba(181, 137, 0, 0.6)', 'rgba(181, 137, 0, 1)'],
+                            borderColor: ['rgba(181, 137, 0, 1)', 'rgba(181, 137, 0, 1)'],
+                            borderWidth: 2,
+                            yAxisID: 'y',
+                            order: 2,
+                        },
+                        {
+                            type: 'line',
+                            label: 'Punto de Equilibrio (tazas)',
+                            data: [140, 126],
+                            borderColor: 'rgba(106, 13, 173, 1)',
+                            backgroundColor: 'rgba(106, 13, 173, 0.1)',
+                            tension: 0.1,
+                            fill: true,
+                            yAxisID: 'y1',
+                            order: 1,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Ganancia ($)',
+                                color: '#b58900'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(2);
+                                }
+                            }
+                        },
+                        y1: {
+                            beginAtZero: false,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Tazas para cubrir gastos',
+                                color: '#6a0dad'
+                            },
+                            grid: {
+                                drawOnChartArea: false, 
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.dataset.type === 'bar') {
+                                        label += new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                    } else {
+                                        label += context.parsed.y + ' tazas';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
